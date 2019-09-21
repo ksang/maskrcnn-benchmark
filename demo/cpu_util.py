@@ -70,7 +70,7 @@ def main():
             time.sleep(args.interval)
             totaltime += time.time()-start_time
             if batch_id % args.freq == 0:
-                print("Batch #{}: execution time: {:>3.3f}, avg: {:>3.4f}, total time: {:>3.3f} percent: {:>3.0f}%".format(
+                print("Batch #{}: inference time: {:>3.3f}s, per image: {:>3.4f}s, total time: {:>3.3f}s inference percent: {:>3.0f}%".format(
                     batch_id, elapsed, elapsed/args.freq, totaltime,
                     100.*elapsed/totaltime))
                 if args.output:
@@ -79,9 +79,9 @@ def main():
                     filename = os.path.join(args.output, 'prediction_{}.jpg'.format(batch_id))
                     print("=> Saving prediction to {}".format(filename))
                     cv2.imwrite(filename, predictions)
+                elapsed = 0.
+                totaltime = 0.
             batch_id+=1
-            elapsed = 0.
-            totaltime = 0.
         except KeyboardInterrupt:
             print("Interrupted.")
             break
